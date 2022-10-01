@@ -1,13 +1,17 @@
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.2 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.26.0 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.3.2 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.26.0 |
 
 ## Modules
 
@@ -77,6 +81,7 @@ No modules.
 | <a name="input_tunnel2_startup_action"></a> [tunnel2\_startup\_action](#input\_tunnel2\_startup\_action) | The action to take when the establishing the tunnel for the second VPN connection. | `string` | `"add"` | no |
 | <a name="input_tunnel_inside_ip_version"></a> [tunnel\_inside\_ip\_version](#input\_tunnel\_inside\_ip\_version) | Indicate whether the VPN tunnels process IPv4 or IPv6 traffic. | `string` | `"ipv4"` | no |
 | <a name="input_vpn_gateway_id"></a> [vpn\_gateway\_id](#input\_vpn\_gateway\_id) | The ID of the virtual gateway. | `string` | `null` | no |
+| <a name="input_vpn_id"></a> [vpn\_id](#input\_vpn\_id) | n/a | `string` | n/a | yes |
 
 ## Outputs
 

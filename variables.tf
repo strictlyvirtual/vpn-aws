@@ -501,3 +501,8 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "vpn_id" {
+  description = ""
+  type        = string
+}

@@ -4,7 +4,7 @@ resource "aws_customer_gateway" "this" {
   device_name     = var.device_name
   ip_address      = var.ip_address
   type            = "ipsec.1"
-  tags            = merge(var.tags, { Name = "cg-${replace(var.resource_name, "_", "-")}" })
+  tags            = merge(var.tags, { Name = "cg-${replace(var.resource_name, "_", "-")}-${var.vpn_id}" })
 }
 
 
@@ -66,7 +66,7 @@ resource "aws_vpn_connection" "this" {
   tunnel2_replay_window_size           = var.tunnel2_replay_window_size
   tunnel2_startup_action               = var.tunnel2_startup_action
 
-  tags = merge(var.tags, { Name = "vpn-${replace(var.resource_name, "_", "-")}" })
+  tags = merge(var.tags, { Name = "vpn-${replace(var.resource_name, "_", "-")}-${var.vpn_id}" })
 
   depends_on = [
     aws_customer_gateway.this

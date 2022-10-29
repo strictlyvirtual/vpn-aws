@@ -4,14 +4,14 @@ resource "aws_customer_gateway" "this" {
   device_name     = var.device_name
   ip_address      = var.ip_address
   type            = "ipsec.1"
-  tags            = merge(var.tags, { Name = "cg-${replace(var.resource_name, "_", "-")}-${var.vpn_id}" })
+  tags            = merge(var.tags, { Name = "cg-${replace(var.resource_name, "_", "-")}" })
 }
 
 
 resource "aws_vpn_connection" "this" {
   customer_gateway_id                     = aws_customer_gateway.this.id
-  transit_gateway_id                      = try(var.transit_gateway_id, false) ? var.transit_gateway_id : null
-  vpn_gateway_id                          = try(var.transit_gateway_id, false) ? null : var.vpn_gateway_id
+  transit_gateway_id                      = try(var.transit_gateway_id, null)
+  vpn_gateway_id                          = try(var.vpn_gateway_id, null)
   type                                    = aws_customer_gateway.this.type
   static_routes_only                      = var.static_routes_only
   enable_acceleration                     = var.enable_acceleration
@@ -23,14 +23,14 @@ resource "aws_vpn_connection" "this" {
   transport_transit_gateway_attachment_id = can(var.outside_ip_address_type == "PrivateIpv4") ? var.transport_transit_gateway_attachment_id : null
 
   tunnel1_inside_cidr         = var.tunnel1_inside_cidr
-  tunnel1_inside_ipv6_cidr    = try(var.transit_gateway_id, false) ? var.tunnel1_inside_ipv6_cidr : null
+  tunnel1_inside_ipv6_cidr    = try(var.tunnel1_inside_ipv6_cidr, null)
   tunnel1_preshared_key       = var.tunnel1_preshared_key
   tunnel1_dpd_timeout_action  = var.tunnel1_dpd_timeout_action
   tunnel1_dpd_timeout_seconds = var.tunnel1_dpd_timeout_seconds
   tunnel1_ike_versions        = toset(var.tunnel1_ike_versions)
 
   tunnel2_inside_cidr         = var.tunnel2_inside_cidr
-  tunnel2_inside_ipv6_cidr    = try(var.transit_gateway_id, false) ? var.tunnel2_inside_ipv6_cidr : null
+  tunnel2_inside_ipv6_cidr    = try(var.tunnel2_inside_ipv6_cidr, null)
   tunnel2_preshared_key       = var.tunnel2_preshared_key
   tunnel2_dpd_timeout_action  = var.tunnel2_dpd_timeout_action
   tunnel2_dpd_timeout_seconds = var.tunnel2_dpd_timeout_seconds
@@ -66,7 +66,7 @@ resource "aws_vpn_connection" "this" {
   tunnel2_replay_window_size           = var.tunnel2_replay_window_size
   tunnel2_startup_action               = var.tunnel2_startup_action
 
-  tags = merge(var.tags, { Name = "vpn-${replace(var.resource_name, "_", "-")}-${var.vpn_id}" })
+  tags = merge(var.tags, { Name = "vpn-${replace(var.resource_name, "_", "-")}" })
 
   depends_on = [
     aws_customer_gateway.this

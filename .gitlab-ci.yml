@@ -1,0 +1,4 @@
+include:
+  - project: 'devops/common-ci'
+    ref: main
+    file: '/terraform/Module.gitlab-ci.yml'

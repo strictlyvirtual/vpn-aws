@@ -502,7 +502,9 @@ variable "tags" {
   default     = {}
 }
 
+/*
 variable "vpn_id" {
   description = ""
   type        = string
 }
+*/
